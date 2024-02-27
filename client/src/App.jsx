@@ -8,10 +8,13 @@ import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Header from "./components/Header";
 
+import FooterCom from "./components/Footer";
+
 export default function App() {
   return (
     <Router>
       <Header />
+
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/about" element={<About />} />
@@ -20,6 +23,7 @@ export default function App() {
         <Route exact path="/sign-up" element={<SignUp />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
       </Routes>
+      <FooterCom />
     </Router>
   );
 }
