@@ -1,6 +1,6 @@
 import { Button } from "flowbite-react";
 import React from "react";
-import { AiFillGoogleCircle } from "react-icons/ai";
+import { AiFillGithub, AiFillGoogleCircle } from "react-icons/ai";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,8 +14,8 @@ export default function OAuth() {
   const navigate = useNavigate();
 
   const handleGoogleClick = async () => {
-    const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
+    // const provider = new GoogleAuthProvider();/Dòng này tạo một đối tượng GoogleAuthProvider mới từ Firebase Authentication SDK
+    provider.setCustomParameters({ prompt: "select_account" }); //rong trường hợp này, tham số tùy chỉnh được đặt là {prompt: "select_account"}, có nghĩa là khi người dùng thực hiện đăng nhập bằng Google, họ sẽ luôn được yêu cầu chọn tài khoản Google để sử dụng, thậm chí nếu họ đã đăng nhập vào trình duyệt với một tài khoản khác. Điều này đảm bảo rằng người dùng có thể chọn tài khoản đúng để sử dụng khi đăng nhập vào ứng dụng của bạn
 
     try {
       dispatch(signinStart());
@@ -45,10 +45,13 @@ export default function OAuth() {
       dispatch(signinFailure(error.message));
     }
   };
+
   return (
-    <Button type="button" gradientDuoTone={"pinkToOrange"} outline onClick={handleGoogleClick}>
-      <AiFillGoogleCircle className="w-6 h-6 mr-2" />
-      Continue with Google
-    </Button>
+    <>
+      <Button type="button" gradientDuoTone={"pinkToOrange"} outline onClick={handleGoogleClick}>
+        <AiFillGoogleCircle className="w-6 h-6 mr-2" />
+        Continue with Google
+      </Button>
+    </>
   );
 }
