@@ -9,3 +9,5 @@ export default function ThemeProvider({ children }) {
     </div>
   );
 }
+
+//Props children ở đây là các component con được truyền vào ThemeProvider.

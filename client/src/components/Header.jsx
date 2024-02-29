@@ -39,7 +39,7 @@ export default function Header() {
               </Link>
 
               <Dropdown.Divider />
-              <Dropdown.Item>Sign Out</Dropdown.Item>
+              <Dropdown.Item>Sign out</Dropdown.Item>
             </Dropdown.Header>
           </Dropdown>
         ) : (
