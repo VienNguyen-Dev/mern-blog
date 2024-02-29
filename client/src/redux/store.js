@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userReducer from './user/userSlice.js';
+import themeReducer from './theme/theme.Slice.js';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 //Redux-tôlkit để theo dõi trạng thái của ứng dụng
 //Redux-persist thì lưu trữ trạng thái của ứng dụng
 const rootReducer = combineReducers({
-  user: userReducer
+  user: userReducer,
+  theme: themeReducer
 }) //Tạo một rootReducer bằng cách sử dụng hàm combineReducers để kết hợp các reducer laij với nhau, trong ứng dụng này hiện tại chỉ có một reducer là "ueReducer"
 
 const persistConfig = {
