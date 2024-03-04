@@ -7,10 +7,10 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signoutFailure, signoutStart, signoutSuccess, updateUserFailure, updateUserSuccess, updateUserstart } from "../redux/user/userSlice";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function DashProfile() {
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -20,7 +20,6 @@ export default function DashProfile() {
   const [uploadUserSuccess, setUploadUserSuccess] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
-  const navigate = useNavigate();
 
   const filePickerRef = useRef(null);
   const dispatch = useDispatch();
@@ -132,7 +131,6 @@ export default function DashProfile() {
         dispatch(deleteUserFailure(data.message));
       } else {
         dispatch(deleteUserSuccess(data));
-        navigate("/sign-in");
       }
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
@@ -152,7 +150,6 @@ export default function DashProfile() {
         return;
       } else {
         dispatch(signoutSuccess(data));
-        navigate("/sign-in");
       }
     } catch (error) {
       dispatch(signoutFailure(error.message));
@@ -186,9 +183,16 @@ export default function DashProfile() {
         <TextInput type="text" placeholder="username" id="username" defaultValue={currentUser.username} onChange={handleChange} />
         <TextInput type="email" placeholder="email" id="email" defaultValue={currentUser.email} onChange={handleChange} />
         <TextInput type="password" placeholder="password" id="password" onChange={handleChange} />
-        <Button gradientDuoTone={"purpleToBlue"} outline type="submit">
-          Update
+        <Button gradientDuoTone={"purpleToBlue"} outline type="submit" disabled={loading || imageFileUpLoading}>
+          {loading ? "Updating..." : "Update"}
         </Button>
+        {currentUser.isAdmin && (
+          <Link to={"/create-post"}>
+            <Button type="button" gradientDuoTone={"purpleToPink"} className="w-full">
+              Create a post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className=" text-red-500 mt-5 flex justify-between">
         <span className=" cursor-pointer hover:underline" onClick={() => setShowModal(true)}>
