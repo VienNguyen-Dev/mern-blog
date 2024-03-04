@@ -24,7 +24,7 @@ export default function DashSidebar() {
             </Sidebar.Item>
           </Link>
 
-          <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer">
+          <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer" as="div">
             Sign out
           </Sidebar.Item>
         </Sidebar.ItemGroup>
