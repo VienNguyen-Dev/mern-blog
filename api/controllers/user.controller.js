@@ -58,12 +58,12 @@ export const updateUser = async (req, res, next) => {
 }
 
 export const deleteUser = async (req, res, next) => {
-  if (req.user.id !== req.params.userId) {
+  if (!req.user.isAdmin && req.user.id !== req.params.userId) {
     return next(errorHandler(403, "You are not allow to delete this user"));
   }
   try {
     await User.findByIdAndDelete(req.params.userId);
-    res.status(200).json("User deleted successfully");
+    res.status(200).json("User have been deleted");
   } catch (error) {
     next(error);
   }
@@ -83,14 +83,14 @@ export const getusers = async (req, res, next) => {
   }
 
   try {
-    const startIntex = parseInt(req.query.startIntex) || 0;
+    const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirection = req.query.sort === 'asc' ? 1 : -1;
 
 
     const users = await User.find()
-      .sort({ createAt: sortDirection })
-      .skip(startIntex)
+      .sort({ createdAt: sortDirection })
+      .skip(startIndex)
       .limit(limit);
 
     const usersWithoutPassword = users.map((user) => {

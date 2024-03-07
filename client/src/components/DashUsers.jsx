@@ -21,7 +21,7 @@ export default function DashUsers() {
 
         if (res.ok) {
           setUsers(data.users);
-          if (data.users.length < 5) {
+          if (data.users.length < 9) {
             setShowMore(false);
           }
         }
@@ -52,7 +52,7 @@ export default function DashUsers() {
 
   const handleDeleteUser = async () => {
     try {
-      const res = await fetch(`/api/user/deleteuser/${userIdToDelete}/${currentUser._id}`, {
+      const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
         method: "DELETE",
       });
 
@@ -62,6 +62,7 @@ export default function DashUsers() {
         console.log(data.message);
       } else {
         setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
+        setShowModal(false);
       }
     } catch (error) {
       console.log(error);
@@ -84,7 +85,7 @@ export default function DashUsers() {
             {users.map((user) => (
               <Table.Body key={user._id} className=" divide-y">
                 <Table.Row className=" bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell>{new Date(user.createAt).toLocaleDateString()}</Table.Cell>
+                  <Table.Cell>{new Date(user.createdAt).toLocaleDateString()}</Table.Cell>
                   <Table.Cell>
                     <img src={user.profilePicture} alt="profile" className="w-10 h-10 object-cover bg-gray-500 rounded-full" />
                   </Table.Cell>

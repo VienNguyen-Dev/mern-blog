@@ -35,14 +35,14 @@ export const getposts = async (req, res, next) => {
       ...(req.query.searchTerm && {
         $or: {
           title: {
-            $regex: req.query.searchTerm, $option: 'i',
+            $regex: req.query.searchTerm, $options: 'i',
           },
           content: {
-            $regex: req.query.searchTerm, $option: 'i',
+            $regex: req.query.searchTerm, $options: 'i',
           }
         }
       })
-    }).sort({ createAt: sortDirection }).skip(startIndex).limit(limit)
+    }).sort({ updatedAt: sortDirection }).skip(startIndex).limit(limit)
 
     const totalPosts = await Post.countDocuments();
     const now = new Date();
