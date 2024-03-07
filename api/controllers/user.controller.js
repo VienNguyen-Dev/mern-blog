@@ -112,7 +112,7 @@ export const getusers = async (req, res, next) => {
     )
 
     res.status(200).json({
-      users,
+      users: usersWithoutPassword,
       totalUsers,
       lastMonthUsers
     })
