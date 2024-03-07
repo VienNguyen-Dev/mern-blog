@@ -35,16 +35,16 @@ export const getposts = async (req, res, next) => {
       ...(req.query.searchTerm && {
         $or: {
           title: {
-            $regex: req.query.searchTerm, $options: 'i',
+            $regex: req.query.searchTerm, $options: 'i'
           },
           content: {
-            $regex: req.query.searchTerm, $options: 'i',
+            $regex: req.query.searchTerm, $options: 'i'
           }
         }
       })
-    }).sort({ updatedAt: sortDirection }).skip(startIndex).limit(limit)
+    }).sort({ updatedAt: sortDirection }).skip(startIndex).limit(limit);
 
-    const totalPosts = await Post.countDocuments();
+    const totalPost = await Post.countDocuments();
     const now = new Date();
     const oneMonthAgo = new Date(
       now.getFullYear(),
@@ -56,13 +56,11 @@ export const getposts = async (req, res, next) => {
       createdAt: { $gte: oneMonthAgo }
     })
 
-    res.status(200).json(
-      {
-        posts,
-        totalPosts,
-        lastMonthPosts
-      }
-    )
+    res.status(200).json({
+      posts,
+      totalPost,
+      lastMonthPosts
+    })
   } catch (error) {
     next(error);
   }
@@ -86,7 +84,7 @@ export const updatepost = async (req, res, next) => {
     return next(errorHandler(403, "You are not allow to edit this post"));
   }
   try {
-    const updatePost = await Post.findByIdAndUpdate(
+    const updatedPost = await Post.findByIdAndUpdate(
       req.params.postId,
       {
         $set: {
@@ -99,8 +97,8 @@ export const updatepost = async (req, res, next) => {
       { new: true }
     )
 
-    await updatePost.save();
-    res.status(200).json(updatePost);
+    await updatedPost.save();
+    res.status(200).json(updatedPost);
   }
   catch (error) {
     next(error);

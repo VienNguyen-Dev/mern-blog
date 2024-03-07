@@ -10,7 +10,6 @@ export default function DashPost() {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [postIdToDelete, setpostIdToDelete] = useState("");
-  console.log(userPosts);
   useEffect(() => {
     const fetchPosts = async () => {
       setShowModal(false);
