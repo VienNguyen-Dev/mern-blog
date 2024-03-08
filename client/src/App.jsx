@@ -14,12 +14,13 @@ import CreatePost from "./pages/CreatePost";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 export default function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Header />
-
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/about" element={<About />} />
