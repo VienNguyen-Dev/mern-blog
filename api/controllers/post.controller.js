@@ -33,18 +33,22 @@ export const getposts = async (req, res, next) => {
       ...(req.query.slug && { slug: req.query.slug }),
       ...(req.query.postId && { _id: req.query.postId }),
       ...(req.query.searchTerm && {
-        $or: {
-          title: {
-            $regex: req.query.searchTerm, $options: 'i'
+        $or: [
+          {
+            title: {
+              $regex: req.query.searchTerm, $options: 'i'
+            }
           },
-          content: {
-            $regex: req.query.searchTerm, $options: 'i'
+          {
+            content: {
+              $regex: req.query.searchTerm, $options: 'i'
+            }
           }
-        }
+        ]
       })
     }).sort({ updatedAt: sortDirection }).skip(startIndex).limit(limit);
 
-    const totalPost = await Post.countDocuments();
+    const totalPosts = await Post.countDocuments();
     const now = new Date();
     const oneMonthAgo = new Date(
       now.getFullYear(),
@@ -58,7 +62,7 @@ export const getposts = async (req, res, next) => {
 
     res.status(200).json({
       posts,
-      totalPost,
+      totalPosts,
       lastMonthPosts
     })
   } catch (error) {
